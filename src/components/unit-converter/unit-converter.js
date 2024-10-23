@@ -70,32 +70,45 @@ customElements.define('unit-converter',
       this.#volumeConverter.classList.add('hidden')
       this.#weightConverter.classList.add('hidden')
 
-      this.#lengthButton.addEventListener('click', () => this.showLengthConverter())
-      this.#temperatureButton.addEventListener('click', () => this.showTemperatureConverter())
-      this.#timeButton.addEventListener('click', () => this.showTimeConverter())
-      this.#volumeButton.addEventListener('click', () => this.showVolumeConverter())
-      this.#weightButton.addEventListener('click', () => this.showWeightConverter())
-      
+      this.#lengthButton.addEventListener('click', () => this.#showLengthConverter())
+      this.#temperatureButton.addEventListener('click', () => this.#showTemperatureConverter())
+      this.#timeButton.addEventListener('click', () => this.#showTimeConverter())
+      this.#volumeButton.addEventListener('click', () => this.#showVolumeConverter())
+      this.#weightButton.addEventListener('click', () => this.#showWeightConverter())
+
     }
 
-    showLengthConverter() {
+    #showLengthConverter() {
+      this.#hideConverters()
       this.#lengthConverter.classList.remove('hidden')
     }
 
-    showTemperatureConverter() {
+    #showTemperatureConverter() {
+      this.#hideConverters()
       this.#temperatureConverter.classList.remove('hidden')
     }
 
-    showTimeConverter() {
+    #showTimeConverter() {
+      this.#hideConverters()
       this.#timeConverter.classList.remove('hidden')
     }
 
-    showVolumeConverter() {
+    #showVolumeConverter() {
+      this.#hideConverters()
       this.#volumeConverter.classList.remove('hidden')
     }
 
-    showWeightConverter() {
+    #showWeightConverter() {
+      this.#hideConverters()
       this.#weightConverter.classList.remove('hidden')
+    }
+
+    #hideConverters() {
+      this.#lengthConverter.classList.add('hidden')
+      this.#temperatureConverter.classList.add('hidden')
+      this.#timeConverter.classList.add('hidden')
+      this.#volumeConverter.classList.add('hidden')
+      this.#weightConverter.classList.add('hidden')
     }
   }
 )
