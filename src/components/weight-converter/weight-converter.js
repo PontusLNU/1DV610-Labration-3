@@ -13,7 +13,7 @@ customElements.define('weight-converter',
       this.attachShadow({ mode: 'open' })
         .appendChild(template.content.cloneNode(true))
 
-        this.#weightConverter = this.shadowRoot.querySelector('.weight-converter')
+      this.#weightConverter = this.shadowRoot.querySelector('.weight-converter')
     }
   }
 )
