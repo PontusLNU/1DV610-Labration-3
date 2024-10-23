@@ -13,7 +13,7 @@ customElements.define('volume-converter',
       this.attachShadow({ mode: 'open' })
         .appendChild(template.content.cloneNode(true))
 
-        this.#volumeConverter = this.shadowRoot.querySelector('.volume-converter')
+      this.#volumeConverter = this.shadowRoot.querySelector('.volume-converter')
     }
   }
 )
