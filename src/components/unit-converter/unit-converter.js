@@ -8,18 +8,53 @@ const template = document.createElement('template')
 template.innerHTML = `
 <style>
   .hidden {
-    display: none
+    display: none;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  button {
+    background-color: #1b3b85;
+    color: white;
+    font-size: 16px;
+    padding: 12px 24px;
+    border: 2px solid #ffffff;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 10px 5px;
+    transition: background-color 0.3s, transform 0.3s;
+    font-family: 'Arial', sans-serif;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  }
+
+  button:hover {
+    background-color: #244db7;
+    transform: scale(1.10);
+  }
+
+  length-converter, temperature-converter, time-converter, volume-converter, weight-converter {
+    display: block;
+    background-color: #e0ecff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    width: 50%;
+    text-align: center;
   }
 </style>
-<button class="length-button">Length Converter</button>
 
-<button class="temperature-button">Temperature Converter</button>
-
-<button class="time-button">Time Converter</button>
-
-<button class="volume-button">Volume Converter</button>
-
-<button class="weight-button">Weight Converter</button>
+<div class="button-container">
+  <button class="length-button">Length Converter</button>
+  <button class="temperature-button">Temperature Converter</button>
+  <button class="time-button">Time Converter</button>
+  <button class="volume-button">Volume Converter</button>
+  <button class="weight-button">Weight Converter</button>
+</div>
 
 <length-converter></length-converter>
 <temperature-converter></temperature-converter>
@@ -31,15 +66,25 @@ customElements.define('unit-converter',
   class extends HTMLElement {
 
     #unitConverter
+
     #lengthConverter
+
     #temperatureConverter
+
     #timeConverter
+
     #volumeConverter
+
     #weightConverter
+
     #lengthButton
+
     #temperatureButton
+
     #timeButton
+
     #volumeButton
+
     #weightButton
 
     constructor() {
@@ -109,6 +154,17 @@ customElements.define('unit-converter',
       this.#timeConverter.classList.add('hidden')
       this.#volumeConverter.classList.add('hidden')
       this.#weightConverter.classList.add('hidden')
+      this.#clearOutputs()
+    }
+
+    #clearOutputs() {
+/**
+      this.#lengthConverter.clearOutput()
+      this.#temperatureConverter.clearOutput()
+      this.#timeConverter.clearOutput()
+      this.#volumeConverter.clearOutput()
+       */
+      this.#weightConverter.clearOutput()
     }
   }
 )
