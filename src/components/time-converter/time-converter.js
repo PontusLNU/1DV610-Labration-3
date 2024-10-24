@@ -3,8 +3,8 @@ template.innerHTML = `
 <style></style>
 <div class="time-converter">
   <h1>Time Converter</h1>
-  <label for="inputValue">Add a value to convert:</label>
-  <input type="number" id="inputValue" placeholder="Enter value">
+  <label for="inputValue">Enter the time to convert:</label>
+  <input id="inputValue" placeholder="Enter value">
 
   <label for="fromUnit">From:</label>
   <select id="fromUnit">
