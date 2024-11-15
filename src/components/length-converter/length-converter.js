@@ -68,27 +68,31 @@ customElements.define('length-converter',
     }
 
     connectedCallback() {
-      this.#convertButton.addEventListener('click', this.#handleConvert.bind(this))
+      this.#convertButton.addEventListener('click', this.#handleInput.bind(this))
     }
 
     clearOutput() {
       this.#output.textContent = ''
     }
 
-    #handleConvert() {
-      if (this.#input.value === '') {
-        this.#handleEmptyInput()
-      } else if (this.#fromUnit.value === this.#toUnit.value) {
-        this.#handleSameUnitConversion()
-      } else this.#handleConversion()
+    #handleInput() {
+      try {
+        if (this.#input.value === '') {
+          this.#handleEmptyInput()
+        } else if (this.#fromUnit.value === this.#toUnit.value) {
+          this.#handleSameUnitConversion()
+        } else this.#handleConversion()
+      } catch (error) {
+        this.#output.textContent = error.message
+      }
     }
 
     #handleEmptyInput() {
-      this.#output.textContent = 'Please enter a value to convert.'
+      throw new Error('Please enter a value to convert')
     }
 
     #handleSameUnitConversion( ) {
-      this.#output.textContent = `${this.#input.value} ${this.#fromUnit.value} is still ${this.#input.value} ${this.#fromUnit.value} Please select different units to convert.`
+      throw new Error(`${this.#input.value} ${this.#fromUnit.value.toLowerCase()} is still ${this.#input.value} ${this.#fromUnit.value.toLowerCase()} Please select different units to convert.`)
     }
 
     #handleConversion() {
@@ -104,7 +108,7 @@ customElements.define('length-converter',
     }
 
     #displayResult(result){
-      this.#output.textContent = `${this.#input.value} ${this.#fromUnit.value} = ${result} ${this.#toUnit.value}`
+      this.#output.textContent = `${this.#input.value} ${this.#fromUnit.value} = ${result} ${this.#toUnit.value}`.toLowerCase()
     }
   }
 )
