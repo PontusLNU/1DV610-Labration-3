@@ -55,15 +55,12 @@ customElements.define('weight-converter',
       this.#output = this.shadowRoot.querySelector('#output')
       this.#fromUnit = this.shadowRoot.querySelector('#fromUnit')
       this.#toUnit = this.shadowRoot.querySelector('#toUnit')
+      this.#abortController = new AbortController()
     }
 
     connectedCallback() {
       this.#convertButton.addEventListener('click',
-        (event) => {
-          event.preventDefault()
-          
-          this.#handleInput()
-        },
+        () => this.#handleInput(),
         { signal: this.#abortController.signal }
       )
     }
@@ -78,20 +75,24 @@ customElements.define('weight-converter',
     }
 
     #handleInput() {
-      if (this.#input.value === '') {
-        this.#handleEmptyInput()
-      }
-        else if (this.#fromUnit.value === this.#toUnit.value) {
-        this.#handleSameUnitConversion()
-      } else if (this.#fromUnit.value === 'kg' && this.#toUnit.value === 'lbs') {
-          this.#handleKgToLbsConversion()
-      } else  if (this.#fromUnit.value === 'lbs' && this.#toUnit.value === 'kg') {
-          this.#handleLbsToKgConversion()
-      }
+      try{
+        if (this.#input.value === '') {
+          this.#handleEmptyInput()
+        }
+          else if (this.#fromUnit.value === this.#toUnit.value) {
+          this.#handleSameUnitConversion()
+        } else if (this.#fromUnit.value === 'kg' && this.#toUnit.value === 'lbs') {
+            this.#handleKgToLbsConversion()
+        } else  if (this.#fromUnit.value === 'lbs' && this.#toUnit.value === 'kg') {
+            this.#handleLbsToKgConversion()
+        }
+      } catch (error) {
+          this.#output.textContent = error.message
+        }
     }
     
     #handleSameUnitConversion( ) {
-      this.#output.textContent = `${this.#input.value} ${this.#fromUnit.value} is still ${this.#input.value} ${this.#fromUnit.value} Please select different units to convert.`
+      throw new Error(`${this.#input.value} ${this.#fromUnit.value} is still ${this.#input.value} ${this.#fromUnit.value} Please select different units to convert.`)
     }
 
     #handleKgToLbsConversion() {
@@ -103,7 +104,7 @@ customElements.define('weight-converter',
     }
 
     #handleEmptyInput() {
-      this.#output.textContent = 'Please enter a value to convert.'
+      throw new Error('Please enter a value to convert.')
     }
   }
 )

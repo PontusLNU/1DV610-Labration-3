@@ -54,15 +54,12 @@ customElements.define('volume-converter',
       this.#output = this.shadowRoot.querySelector('#output')
       this.#fromUnit = this.shadowRoot.querySelector('#fromUnit')
       this.#toUnit = this.shadowRoot.querySelector('#toUnit')
+      this.#abortController = new AbortController()
     }
 
     connectedCallback() {
       this.#convertButton.addEventListener('click',
-        (event) => {
-          event.preventDefault()
-          
-          this.#handleInput()
-        },
+        () => this.#handleInput(),
         { signal: this.#abortController.signal }
       )
     }
@@ -71,24 +68,33 @@ customElements.define('volume-converter',
       // Removes the eventlistener
       this.#abortController.abort()
     }
+
     clearOutput() {
       this.#output.textContent = ''
     }
     
     #handleInput() {
-      if (this.#input.value === '') {
-        this.#handleEmptyInput()
-      } else if (this.#fromUnit.value === this.#toUnit.value) {
-        this.#handleSameUnitConversion()
-      } else if (this.#fromUnit.value === 'gallon' && this.#toUnit.value === 'litre') {
-        this.#handleGallonToLitreConversion()
-      } else if (this.#fromUnit.value === 'litre' && this.#toUnit.value === 'gallon') {
-        this.#handleLitreToGallonConversion()
-      }
+      try {
+        if (this.#input.value === '') {
+          this.#handleEmptyInput()
+        } else if (this.#fromUnit.value === this.#toUnit.value) {
+          this.#handleSameUnitConversion()
+        } else if (this.#fromUnit.value === 'gallon' && this.#toUnit.value === 'litre') {
+          this.#handleGallonToLitreConversion()
+        } else if (this.#fromUnit.value === 'litre' && this.#toUnit.value === 'gallon') {
+          this.#handleLitreToGallonConversion()
+        }
+      } catch (error) {
+          this.#output.textContent = error.message
+        }
+    }
+
+    #handleEmptyInput() {
+      throw new Error('Please enter a value to convert.')
     }
 
     #handleSameUnitConversion( ) {
-      this.#output.textContent = `${this.#input.value} ${this.#fromUnit.value} is still ${this.#input.value} ${this.#fromUnit.value} Please select different units to convert.`
+      throw new Error(`${this.#input.value} ${this.#fromUnit.value} is still ${this.#input.value} ${this.#fromUnit.value} Please select different units to convert.`)
     }
 
     #handleGallonToLitreConversion() {
@@ -97,10 +103,6 @@ customElements.define('volume-converter',
 
     #handleLitreToGallonConversion() {
       this.#output.textContent = `${this.#input.value} ${this.#fromUnit.value}  = ${this.#volumeConverter.convertLitreToGallon(parseFloat(this.#input.value))} ${this.#toUnit.value}`
-    }
-
-    #handleEmptyInput() {
-      this.#output.textContent = 'Please enter a value to convert.'
     }
   }
 )
