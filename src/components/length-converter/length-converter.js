@@ -10,26 +10,26 @@ template.innerHTML = `
 
   <label for="fromUnit">From:</label>
   <select id="fromUnit">
-    <option value="mm" selected>Millimeters</option>
-    <option value="cm">Centimeters</option>
-    <option value="m">Meters</option>
-    <option value="km">Kilometers</option>
-    <option value="inch">Inches</option>
-    <option value="foot">Feet</option>
-    <option value="yard">Yards</option>
-    <option value="mile">Miles</option>
+    <option value="Mm" selected>Millimeters</option>
+    <option value="Cm">Centimeters</option>
+    <option value="M">Meters</option>
+    <option value="Km">Kilometers</option>
+    <option value="Inch">Inches</option>
+    <option value="Foot">Feet</option>
+    <option value="Yard">Yards</option>
+    <option value="Mile">Miles</option>
   </select>
 
   <label for="toUnit">To:</label>
   <select id="toUnit">
-    <option value="mm">Millimeters</option>
-    <option value="cm" selected>Centimeters</option>
-    <option value="m">Meters</option>
-    <option value="km">Kilometers</option>
-    <option value="inch">Inches</option>
-    <option value="foot">Feet</option>
-    <option value="yard">Yards</option>
-    <option value="mile">Miles</option>
+    <option value="Mm">Millimeters</option>
+    <option value="Cm" selected>Centimeters</option>
+    <option value="M">Meters</option>
+    <option value="Km">Kilometers</option>
+    <option value="Inch">Inches</option>
+    <option value="Foot">Feet</option>
+    <option value="Yard">Yards</option>
+    <option value="Mile">Miles</option>
   </select>
 
   <button id="convert">Convert</button>
@@ -76,15 +76,35 @@ customElements.define('length-converter',
     }
 
     #handleConvert() {
+      if (this.#input.value === '') {
+        this.#handleEmptyInput()
+      } else if (this.#fromUnit.value === this.#toUnit.value) {
+        this.#handleSameUnitConversion()
+      } else this.#handleConversion()
+    }
 
+    #handleEmptyInput() {
+      this.#output.textContent = 'Please enter a value to convert.'
     }
 
     #handleSameUnitConversion( ) {
       this.#output.textContent = `${this.#input.value} ${this.#fromUnit.value} is still ${this.#input.value} ${this.#fromUnit.value} Please select different units to convert.`
     }
 
-    #handleEmptyInput() {
-      this.#output.textContent = 'Please enter a value to convert.'
+    #handleConversion() {
+      const fromUnit = this.#fromUnit.value
+      const toUnit = this.#toUnit.value
+      const valueToConvert = parseFloat(this.#input.value)
+
+      const methodName = `convert${fromUnit}To${toUnit}`
+
+      const result = this.#lengthConverter[methodName](valueToConvert)
+
+      this.#displayResult(result)
+    }
+
+    #displayResult(result){
+      this.#output.textContent = `${this.#input.value} ${this.#fromUnit.value} = ${result} ${this.#toUnit.value}`
     }
   }
 )
