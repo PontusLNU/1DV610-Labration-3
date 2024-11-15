@@ -33,6 +33,9 @@ template.innerHTML = `
   </select>
 
   <button id="convert">Convert</button>
+
+  <p id="output"></p>
+
 </div>
 `
 customElements.define('length-converter',
@@ -68,6 +71,10 @@ customElements.define('length-converter',
       this.#convertButton.addEventListener('click', this.#handleConvert.bind(this))
     }
 
+    clearOutput() {
+      this.#output.textContent = ''
+    }
+
     #handleConvert() {
 
     }
@@ -78,10 +85,6 @@ customElements.define('length-converter',
 
     #handleEmptyInput() {
       this.#output.textContent = 'Please enter a value to convert.'
-    }
-
-    clearOutput() {
-      this.#output.textContent = ''
     }
   }
 )

@@ -59,6 +59,10 @@ customElements.define('weight-converter',
       this.#convertButton.addEventListener('click', this.#handleConvert.bind(this))
     }
 
+    clearOutput() {
+      this.#output.textContent = ''
+    }
+    
     #handleConvert() {
       if (this.#input.value === '') {
         this.#handleEmptyInput()
@@ -67,7 +71,7 @@ customElements.define('weight-converter',
         this.#handleSameUnitConversion()
       } else if (this.#fromUnit.value === 'kg' && this.#toUnit.value === 'lbs') {
           this.#handleKgToLbsConversion()
-      } else {
+      } else  if (this.#fromUnit.value === 'lbs' && this.#toUnit.value === 'kg') {
           this.#handleLbsToKgConversion()
       }
     }
@@ -87,10 +91,5 @@ customElements.define('weight-converter',
     #handleEmptyInput() {
       this.#output.textContent = 'Please enter a value to convert.'
     }
-
-    clearOutput() {
-      this.#output.textContent = ''
-    }
-
   }
 )

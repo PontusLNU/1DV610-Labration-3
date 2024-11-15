@@ -58,6 +58,10 @@ customElements.define('temperature-converter',
       this.#convertButton.addEventListener('click', this.#handleConvert.bind(this))
     }
 
+    clearOutput() {
+      this.#output.textContent = ''
+    }
+    
     #handleConvert() {
       if (this.#input.value === '') {
         this.#handleEmptyInput()
@@ -84,10 +88,6 @@ customElements.define('temperature-converter',
 
     #handleEmptyInput() {
       this.#output.textContent = 'Please enter a value to convert.'
-    }
-
-    clearOutput() {
-      this.#output.textContent = ''
     }
   }
 )

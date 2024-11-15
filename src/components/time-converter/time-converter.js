@@ -58,6 +58,10 @@ customElements.define('time-converter',
       this.#convertButton.addEventListener('click', this.#handleConvert.bind(this))
     }
 
+    clearOutput() {
+      this.#output.textContent = ''
+    }
+    
     #handleConvert() {
       try {
       if (this.#input.value === '') {
@@ -92,10 +96,6 @@ customElements.define('time-converter',
 
     #handleError() {
       this.#output.textContent = 'Please enter the time in a valid format. Do not forget PM/AM for 12 hours conversion.'
-    }
-
-    clearOutput() {
-      this.#output.textContent = ''
     }
   }
 )

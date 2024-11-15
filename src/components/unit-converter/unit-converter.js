@@ -158,12 +158,10 @@ customElements.define('unit-converter',
     }
 
     #clearOutputs() {
-/**
       this.#lengthConverter.clearOutput()
       this.#temperatureConverter.clearOutput()
       this.#timeConverter.clearOutput()
       this.#volumeConverter.clearOutput()
-       */
       this.#weightConverter.clearOutput()
     }
   }
