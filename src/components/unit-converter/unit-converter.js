@@ -87,6 +87,8 @@ customElements.define('unit-converter',
 
     #weightButton
 
+    #abortController
+
     constructor() {
       super()
 
@@ -106,6 +108,8 @@ customElements.define('unit-converter',
       this.#volumeButton = this.shadowRoot.querySelector('.volume-button')
       this.#weightButton = this.shadowRoot.querySelector('.weight-button')
 
+      this.#abortController = new AbortController()
+
     }
 
     connectedCallback() {
@@ -115,12 +119,35 @@ customElements.define('unit-converter',
       this.#volumeConverter.classList.add('hidden')
       this.#weightConverter.classList.add('hidden')
 
-      this.#lengthButton.addEventListener('click', () => this.#showLengthConverter())
-      this.#temperatureButton.addEventListener('click', () => this.#showTemperatureConverter())
-      this.#timeButton.addEventListener('click', () => this.#showTimeConverter())
-      this.#volumeButton.addEventListener('click', () => this.#showVolumeConverter())
-      this.#weightButton.addEventListener('click', () => this.#showWeightConverter())
+      this.#lengthButton.addEventListener('click',
+        () => this.#showLengthConverter(),
+        { signal: this.#abortController.signal }
+      )
 
+      this.#temperatureButton.addEventListener('click',
+        () => this.#showTemperatureConverter(),
+        { signal: this.#abortController.signal }
+      )
+
+      this.#timeButton.addEventListener('click',
+        () => this.#showTimeConverter(),
+        { signal: this.#abortController.signal }
+      )
+
+      this.#volumeButton.addEventListener('click',
+        () => this.#showVolumeConverter(),
+        { signal: this.#abortController.signal }
+      )
+
+      this.#weightButton.addEventListener('click',
+        () => this.#showWeightConverter(),
+        { signal: this.#abortController.signal }
+      )
+
+    }
+
+    disconnectedCallback() {
+      this.#abortController.abort()
     }
 
     #showLengthConverter() {

@@ -67,15 +67,12 @@ customElements.define('length-converter',
         this.#output = this.shadowRoot.querySelector('#output')
         this.#fromUnit = this.shadowRoot.querySelector('#fromUnit')
         this.#toUnit = this.shadowRoot.querySelector('#toUnit')
+        this.#abortController = new AbortController()
     }
 
     connectedCallback() {
       this.#convertButton.addEventListener('click',
-        (event) => {
-          event.preventDefault()
-          
-          this.#handleInput()
-        },
+        () => this.#handleInput(),
         { signal: this.#abortController.signal }
       )
     }
@@ -97,8 +94,8 @@ customElements.define('length-converter',
           this.#handleSameUnitConversion()
         } else this.#handleConversion()
       } catch (error) {
-        this.#output.textContent = error.message
-      }
+          this.#output.textContent = error.message
+        }
     }
 
     #handleEmptyInput() {

@@ -59,11 +59,7 @@ customElements.define('time-converter',
 
     connectedCallback() {
       this.#convertButton.addEventListener('click',
-        (event) => {
-          event.preventDefault()
-          
-          this.#handleInput()
-        },
+        () => this.#handleInput(),
         { signal: this.#abortController.signal }
       )
     }
@@ -88,9 +84,9 @@ customElements.define('time-converter',
         } else if (this.#fromUnit.value === '24h' && this.#toUnit.value === '12h') {
           this.#handle24hTo12hConversion()
         }
-    } catch (error) {
-      this.#output.textContent = error.message
-    }
+      } catch (error) {
+          this.#output.textContent = error.message
+        }
   }
 
     #handleEmptyInput() {
