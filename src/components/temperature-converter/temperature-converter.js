@@ -55,39 +55,43 @@ customElements.define('temperature-converter',
     }
 
     connectedCallback() {
-      this.#convertButton.addEventListener('click', this.#handleConvert.bind(this))
+      this.#convertButton.addEventListener('click', this.#handleInput.bind(this))
     }
 
     clearOutput() {
       this.#output.textContent = ''
     }
     
-    #handleConvert() {
-      if (this.#input.value === '') {
-        this.#handleEmptyInput()
-      } else if (this.#fromUnit.value === this.#toUnit.value) {
-        this.#handleSameUnitConversion()
-      } else if (this.#fromUnit.value === 'celsius' && this.#toUnit.value === 'fahrenheit') {
-        this.#handleCelsiusToFahrenheitConversion()
-      } else if (this.#fromUnit.value === 'fahrenheit' && this.#toUnit.value === 'celsius') {
-        this.#handleFahrenheitToCelsiusConversion()
+    #handleInput() {
+      try {
+        if (this.#input.value === '') {
+          this.#handleEmptyInput()
+        } else if (this.#fromUnit.value === this.#toUnit.value) {
+          this.#handleSameUnitConversion()
+        } else if (this.#fromUnit.value === 'celsius' && this.#toUnit.value === 'fahrenheit') {
+          this.#handleCelsiusToFahrenheitConversion()
+        } else if (this.#fromUnit.value === 'fahrenheit' && this.#toUnit.value === 'celsius') {
+          this.#handleFahrenheitToCelsiusConversion()
+        }
+      } catch (error) {
+        this.#output.textContent = error.message
       }
     }
 
+    #handleEmptyInput() {
+      throw new Error('Please enter a value to convert')
+    }
+
     #handleSameUnitConversion( ) {
-      this.#output.textContent = `${this.#input.value} degrees ${this.#fromUnit.value} is still ${this.#input.value} degrees ${this.#fromUnit.value} Please select different units to convert.`
+      throw new Error (this.#output.textContent = `${this.#input.value} degrees ${this.#fromUnit.value} is still ${this.#input.value} degrees ${this.#fromUnit.value} Please select different units to convert.`)
     }
 
     #handleCelsiusToFahrenheitConversion() {
-      this.#output.textContent = `${this.#input.value} degrees ${this.#fromUnit.value}  = ${this.#temperatureConverter.convertCelsiusToFahrenheit(parseFloat(this.#input.value))} degrees ${this.#toUnit.value}`
+      throw new Error (this.#output.textContent = `${this.#input.value} degrees ${this.#fromUnit.value}  = ${this.#temperatureConverter.convertCelsiusToFahrenheit(parseFloat(this.#input.value))} degrees ${this.#toUnit.value}`)
     }
 
     #handleFahrenheitToCelsiusConversion() {
       this.#output.textContent = `${this.#input.value} degrees ${this.#fromUnit.value}  = ${this.#temperatureConverter.convertFahrenheitToCelsius(parseFloat(this.#input.value))} degrees ${this.#toUnit.value}`
-    }
-
-    #handleEmptyInput() {
-      this.#output.textContent = 'Please enter a value to convert.'
     }
   }
 )
