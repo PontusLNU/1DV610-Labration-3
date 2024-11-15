@@ -64,15 +64,15 @@ customElements.define('time-converter',
 
     #handleConvert() {
       try {
-      if (this.#input.value === '') {
-        this.#handleEmptyInput()
-      } else if (this.#fromUnit.value === this.#toUnit.value) {
-        this.#handleSameUnitConversion()
-      } else if (this.#fromUnit.value === '12h' && this.#toUnit.value === '24h') {
-        this.#handle12hTo24hConversion()
-      } else if (this.#fromUnit.value === '24h' && this.#toUnit.value === '12h') {
-        this.#handle24hTo12hConversion()
-      }
+        if (this.#input.value === '') {
+          this.#handleEmptyInput()
+        } else if (this.#fromUnit.value === this.#toUnit.value) {
+          this.#handleSameUnitConversion()
+        } else if (this.#fromUnit.value === '12h' && this.#toUnit.value === '24h') {
+          this.#handle12hTo24hConversion()
+        } else if (this.#fromUnit.value === '24h' && this.#toUnit.value === '12h') {
+          this.#handle24hTo12hConversion()
+        }
     } catch (error) {
       this.#handleError()
     }
