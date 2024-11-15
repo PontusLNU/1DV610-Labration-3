@@ -61,7 +61,7 @@ customElements.define('time-converter',
     clearOutput() {
       this.#output.textContent = ''
     }
-    
+
     #handleConvert() {
       try {
       if (this.#input.value === '') {
@@ -79,7 +79,7 @@ customElements.define('time-converter',
   }
 
     #handleEmptyInput() {
-      this.#output.textContent = 'Please enter a time in valid format.'
+      this.#output.textContent = 'I can not make a time conversion from thin air!'
     }
 
     #handleSameUnitConversion( ) {
@@ -95,7 +95,7 @@ customElements.define('time-converter',
     }
 
     #handleError() {
-      this.#output.textContent = 'Please enter the time in a valid format. Do not forget PM/AM for 12 hours conversion.'
+      this.#output.textContent = 'Please enter the time in a valid format, xx:xx(pm/am if converting from 12hours).'
     }
   }
 )
