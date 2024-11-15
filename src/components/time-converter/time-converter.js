@@ -74,16 +74,16 @@ customElements.define('time-converter',
           this.#handle24hTo12hConversion()
         }
     } catch (error) {
-      this.#handleError()
+      this.#output.textContent = error.message
     }
   }
 
     #handleEmptyInput() {
-      this.#output.textContent = 'I can not make a time conversion from thin air!'
+      throw new Error('I can not make a time conversion from thin air!')
     }
 
     #handleSameUnitConversion( ) {
-      this.#output.textContent = `Please select different time formats to convert.`
+      throw new Error('Please select different time formats to convert.')
     }
 
     #handle12hTo24hConversion() {
@@ -92,10 +92,6 @@ customElements.define('time-converter',
 
     #handle24hTo12hConversion() {
       this.#output.textContent = `${this.#input.value} = ${this.#timeConverter.convert24HourTo12Hour(this.#input.value).toString()}`
-    }
-
-    #handleError() {
-      this.#output.textContent = 'Please enter the time in a valid format, xx:xx(pm/am if converting from 12hours).'
     }
   }
 )
