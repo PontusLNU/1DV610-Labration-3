@@ -53,6 +53,8 @@ customElements.define('length-converter',
 
     #toUnit
 
+    #abortController
+
     constructor() {
       super()
 
@@ -68,7 +70,19 @@ customElements.define('length-converter',
     }
 
     connectedCallback() {
-      this.#convertButton.addEventListener('click', this.#handleInput.bind(this))
+      this.#convertButton.addEventListener('click',
+        (event) => {
+          event.preventDefault()
+          
+          this.#handleInput()
+        },
+        { signal: this.#abortController.signal }
+      )
+    }
+
+    disconnectedCallback() {
+      // Removes the eventlistener
+      this.#abortController.abort()
     }
 
     clearOutput() {

@@ -40,6 +40,8 @@ customElements.define('volume-converter',
 
     #toUnit
 
+    #abortController
+
     constructor() {
       super()
 
@@ -55,14 +57,25 @@ customElements.define('volume-converter',
     }
 
     connectedCallback() {
-      this.shadowRoot.querySelector('#convert').addEventListener('click', this.#handleConvert.bind(this))
+      this.#convertButton.addEventListener('click',
+        (event) => {
+          event.preventDefault()
+          
+          this.#handleInput()
+        },
+        { signal: this.#abortController.signal }
+      )
     }
 
+    disconnectedCallback() {
+      // Removes the eventlistener
+      this.#abortController.abort()
+    }
     clearOutput() {
       this.#output.textContent = ''
     }
     
-    #handleConvert() {
+    #handleInput() {
       if (this.#input.value === '') {
         this.#handleEmptyInput()
       } else if (this.#fromUnit.value === this.#toUnit.value) {

@@ -40,6 +40,8 @@ customElements.define('temperature-converter',
 
     #toUnit
 
+    #abortController
+
     constructor() {
       super()
 
@@ -54,10 +56,22 @@ customElements.define('temperature-converter',
       this.#toUnit = this.shadowRoot.querySelector('#toUnit')
     }
 
+
     connectedCallback() {
-      this.#convertButton.addEventListener('click', this.#handleInput.bind(this))
+      this.#convertButton.addEventListener('click',
+        (event) => {
+          event.preventDefault()
+          
+          this.#handleInput()
+        },
+        { signal: this.#abortController.signal }
+      )
     }
 
+    disconnectedCallback() {
+      // Removes the eventlistener
+      this.#abortController.abort()
+    }
     clearOutput() {
       this.#output.textContent = ''
     }
@@ -83,11 +97,11 @@ customElements.define('temperature-converter',
     }
 
     #handleSameUnitConversion( ) {
-      throw new Error (this.#output.textContent = `${this.#input.value} degrees ${this.#fromUnit.value} is still ${this.#input.value} degrees ${this.#fromUnit.value} Please select different units to convert.`)
+      throw new Error(this.#output.textContent = `${this.#input.value} degrees ${this.#fromUnit.value} is still ${this.#input.value} degrees ${this.#fromUnit.value} Please select different units to convert.`)
     }
 
     #handleCelsiusToFahrenheitConversion() {
-      throw new Error (this.#output.textContent = `${this.#input.value} degrees ${this.#fromUnit.value}  = ${this.#temperatureConverter.convertCelsiusToFahrenheit(parseFloat(this.#input.value))} degrees ${this.#toUnit.value}`)
+      throw new Error(this.#output.textContent = `${this.#input.value} degrees ${this.#fromUnit.value}  = ${this.#temperatureConverter.convertCelsiusToFahrenheit(parseFloat(this.#input.value))} degrees ${this.#toUnit.value}`)
     }
 
     #handleFahrenheitToCelsiusConversion() {

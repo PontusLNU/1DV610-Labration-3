@@ -40,6 +40,8 @@ customElements.define('time-converter',
 
     #toUnit
 
+    #abortController
+
     constructor() {
       super()
 
@@ -52,17 +54,30 @@ customElements.define('time-converter',
       this.#output = this.shadowRoot.querySelector('#output')
       this.#fromUnit = this.shadowRoot.querySelector('#fromUnit')
       this.#toUnit = this.shadowRoot.querySelector('#toUnit')
+      this.#abortController = new AbortController()
     }
 
     connectedCallback() {
-      this.#convertButton.addEventListener('click', this.#handleConvert.bind(this))
+      this.#convertButton.addEventListener('click',
+        (event) => {
+          event.preventDefault()
+          
+          this.#handleInput()
+        },
+        { signal: this.#abortController.signal }
+      )
+    }
+
+    disconnectedCallback() {
+      // Removes the eventlistener
+      this.#abortController.abort()
     }
 
     clearOutput() {
       this.#output.textContent = ''
     }
 
-    #handleConvert() {
+    #handleInput() {
       try {
         if (this.#input.value === '') {
           this.#handleEmptyInput()

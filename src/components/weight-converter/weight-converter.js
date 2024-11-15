@@ -41,6 +41,8 @@ customElements.define('weight-converter',
 
     #toUnit
 
+    #abortController
+
     constructor() {
       super()
 
@@ -56,14 +58,26 @@ customElements.define('weight-converter',
     }
 
     connectedCallback() {
-      this.#convertButton.addEventListener('click', this.#handleConvert.bind(this))
+      this.#convertButton.addEventListener('click',
+        (event) => {
+          event.preventDefault()
+          
+          this.#handleInput()
+        },
+        { signal: this.#abortController.signal }
+      )
+    }
+
+    disconnectedCallback() {
+      // Removes the eventlistener
+      this.#abortController.abort()
     }
 
     clearOutput() {
       this.#output.textContent = ''
     }
-    
-    #handleConvert() {
+
+    #handleInput() {
       if (this.#input.value === '') {
         this.#handleEmptyInput()
       }
