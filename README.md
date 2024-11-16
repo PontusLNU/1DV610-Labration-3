@@ -2,7 +2,7 @@
 
 ## Beksrivning
 
-Detta är en webbapplikation är en enhetsomvandlare som har fem stycken olika omvandlare. Varje omvandlare är en egen webbkomponent. Webbapplikationen är byggd med kodkvalitet i fokus baserat på boken "Clean Code" av *Robert Cecil Martin*. Webbapplikationens beräkningar är byggda på ett npm-paket som jag skapat och är fritt att använda och kan hittas på [denna länk](https://www.npmjs.com/package/unit-converter-package)
+Detta är en webbapplikation som är en enhetsomvandlare som har fem stycken olika omvandlare. Varje omvandlare är en egen webbkomponent. Webbapplikationen är byggd med kodkvalitet i fokus baserat på boken "Clean Code" av *Robert Cecil Martin*. Webbapplikationens beräkningar är byggda på ett npm-paket som jag skapat och är fritt att använda och kan hittas på [denna länk](https://www.npmjs.com/package/unit-converter-package)
 
 ## Vision
 
