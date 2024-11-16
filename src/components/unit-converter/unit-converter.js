@@ -46,8 +46,14 @@ template.innerHTML = `
     width: 50%;
     text-align: center;
   }
-</style>
 
+  .page-header {
+    text-align: center;
+  }
+</style>
+<div>
+  <h1 class="page-header">Unit Converter</h1>
+</div>
 <div class="button-container">
   <button class="length-button">Length Converter</button>
   <button class="temperature-button">Temperature Converter</button>
