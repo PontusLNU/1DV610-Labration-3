@@ -153,6 +153,7 @@ customElements.define('unit-converter',
     }
 
     disconnectedCallback() {
+      // Removes all the eventlisteners
       this.#abortController.abort()
     }
 
