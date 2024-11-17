@@ -28,32 +28,34 @@ Detta kapitel handlar om formattering, det vill säga saker som antal tecken i e
 
 Min app hanterar inte så mycket data. Den tar input från användaren och använder sedan specifika metoder för att konvertera just den efterfrågade omvandlingen. Varje enhetsomvandlare är en egen klass/komponent så det följer det boken säger om enkla datastrukturer och även "The law of demeter" då den inte kedjar ihop metodanrop mellan olika objekt. I nedan bild så är de enda metoderna som hanteras centralt i unit-converter.js och det handlar om att visa/dölja de individuella klasserna med undantaget för metoden #clearOutputs som gör metodanrop till de andra klasserna.
 
-[Objects and Data Structures](/Screenshots/objects%20and%20data%20structures.png)
+![Objects and Data Structures](/Screenshots/objects%20and%20data%20structures.png)
 
 ## Kapitel 7 Error Handling
 
 Boken förespråkar att kasta undantag med tydliga felmeddelanden och att använda sig av try/catch block. Detta har jag försökt anammat och jag använder mig av try/catch block när jag hanterar min input för att fånga upp felen så uppstår i både min modul samt de som jag skapat i min app. Detta var något som jag kom tillbaka till i boken när jag hade problem med att få min time-converter att funka. Då började jag implementera validering för indatan som redan fanns i min modul innan jag kom på att jag genom ett try/catch block kunde fånga upp felen från modulen. Det visade sig dock att jag hade stavat metodanropen fel men det hela gjorde att jag i slutändan kom ut med en mycket bättre felhantering än vad jag hade skrivit innan.
 
-[Error Handling](/Screenshots/error%20handling.png)
+![Error Handling](/Screenshots/error%20handling.png)
 
 ## Kapitel 8 Boundaries
 
 Min implentering innebär att varje enskild klass/komponent har ett självständigt gränssnitt mot modulen. Samtliga gränssnitt är uppbyggda på samma sätt i hur dom hanterar användaren input och vilken metod som ska anropas i modulen. Min length-converter.js skiljer sig dock från de övriga omvandlarna i att den hanterar sina metodanrop dynamiskt. Detta hade kunnat implementeras i samtliga och hade då gjort att dom var enklare att anpassa till till exempel nya enheter att omvandla mellan. Se den dynamiska metodanropen nedan i bild.
 
-[Boundaries](/Screenshots/Boundaries.png)
+![Boundaries](/Screenshots/Boundaries.png)
 
 ## Kapitel 9 Unit Tests
 
 Jag har utfört väldigt utförliga tester i min modul där den testar samtliga metoder och kollar så att den omvandlar korrekt samt att den testar så att jag har korrekt felhantering om jag försöker omvandla till exempel en tid som inte är inom intervallet för en 24h klocka eller en temperatur som inte har giltig indata i form av siffror. Så jag skulle påstå att jag förhåller mig bra till vad boken säger om enhetstester.
 
-[Unit Tests](/Screenshots/unit%20tests.png)
+![Unit Tests](/Screenshots/unit%20tests.png)
 
 ## Kapitel 10 Classes
 
 Boken säger att klasser ska vara små och göra en sak. Detta gör att klasserna till exempel blir mindre känsliga för förändring och enklare att testa. Mina klassers förhållande till detta är att varje typ av enhetstyp är en egen klass. Till exempel så har jag en klass som hanterar temperaturomvandlingar och en annan klass som hanterar viktomvandlingar och så vidare för de olika omvandlarna. Detta skulle till och med kunna utökas till en egen klass för felhantering. Nedan bild visar klassen VolumeConverter i min modul som har validering av indatan samt metoder för omvandling mellan volymenheter.
 
-[Classes](/Screenshots/classes.png)
+![Classes](/Screenshots/classes.png)
 
 ## Kapitel 11 Systems
 
 Jag har byggt min app så att att varje enskilld komponent/klass ska vara återanvändbar. I skärmavbilden från unit-converter.js så ser man att varje komponent läggs in som ett fält i klassen och som en egen komponent i dess innerHTML som gör att det är lätt att lägga till eller ta bort klasser vid vidareutveckling av appen. På så vis blir den också lätt att underhålla och jag kan till exempel plocka bort en av omvandlarna utan att det påverkar övrig funktionalitet någonting.
+
+![Systems](/Screenshots/systems.png)
